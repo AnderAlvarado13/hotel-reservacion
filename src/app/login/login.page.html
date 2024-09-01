@@ -1,0 +1,27 @@
+<ion-content [fullscreen]="true">
+  <ion-card>
+    <ion-card-header>
+      <ion-item lines="none">
+        <img src="../../assets/img/login.png" style="max-width: 30%!important;margin: auto!important;">
+      </ion-item>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Usuario: </ion-label>
+          <ion-input [(ngModel)]="User" [ngModelOptions]="{standalone: true}"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label>Contraseña: </ion-label>
+          <ion-input [(ngModel)]="Pass" [ngModelOptions]="{standalone: true}" type="password"  (keyup.enter)="Login()"></ion-input>
+        </ion-item>
+        <ion-item lines="none">
+          <a slot="end" href="/register" style="text-decoration: none;">Registrar Usuario</a>
+        </ion-item>
+        <ion-item lines="none" style="margin-top: 4%;">
+          <ion-button shape="round" color="primary" fill="outline" style="margin: auto!important;width: 120px;height: 40px;font-size: 15px;" (click)="Login()">Ingresar</ion-button>
+         </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
