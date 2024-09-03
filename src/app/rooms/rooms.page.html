@@ -17,6 +17,9 @@
                 Gestión de Habitaciones
                 <p>Administre sus Habitaciones desde este modulo!</p>
               </ion-label>
+              <ion-select slot="end" justify="end" [(ngModel)]="global.filterHotel_id" (ionChange)="listRoomshotels(global.filterHotel_id)" interface="popover" label="Filtre hotel"  fill="solid">
+                <ion-select-option *ngFor="let hotel of datalistHotel" [value]="hotel.id">{{ hotel.name }}</ion-select-option>
+              </ion-select>
               <ion-button slot="end" size="default" color="success" (click)="openModal()"> <ion-icon name="add-outline"></ion-icon></ion-button>
             </ion-item>
 
@@ -25,8 +28,12 @@
       </ion-col>
     </ion-row>
     <ion-row class="ion-align-items-center">
-      <ion-col size="4" *ngFor ="let info of datalist">
+      <ion-col size="4" *ngFor ="let info of dataListRoomshotel">
         <ion-card style="height: auto;" class="card-border">
+          <ion-card-header>
+            <ion-title style="text-align: center;align-items: center;" size="large"><ion-icon name="business-outline"></ion-icon> {{ mostrarNombreHotel(info.hotel_id)}} <ion-icon name="business-outline"></ion-icon>
+              </ion-title>
+          </ion-card-header>
           <ion-card-content style="width: 100%;">
             <ion-item lines="none">
               <ion-thumbnail slot="start">
@@ -35,7 +42,6 @@
               <ion-label class="ion-text-wrap">
                 {{info.room_number}}
                 <p>
-                  <ion-icon name="business-outline"></ion-icon> {{info.hotel_id}} <br>
                   <ion-icon name="bed-outline"></ion-icon> {{info.type}}<br>
                   <ion-icon name="cash-outline"></ion-icon> {{info.price_per_night}}
                 </p>
@@ -44,7 +50,7 @@
               </ion-label>
               <ion-buttons>
                 <div style="cursor: pointer">
-                  <ion-icon slot="end" name="trash" color="danger" (click)="deleteHotelId(info.id)"></ion-icon>
+                  <ion-icon slot="end" name="trash" color="danger" (click)="deleteRoomId(info.id)"></ion-icon>
                 </div>
                 <div style="cursor: pointer">
                   <ion-icon slot="end" name="create" color="secondary" (click)="setOpen(true,info.id)"></ion-icon>
@@ -79,19 +85,31 @@
               <ion-card-content style="width: 100%;">
                 <ion-row class="ion-align-items-center">
                   <ion-col size="12">
-                    <ion-input type="text" fill="solid" label="Hotel" labelPlacement="floating" helperText="Digite el nombre del hotel" ngModel [(ngModel)]="hotel_id"></ion-input>
+                    <ion-select [(ngModel)]="hotel_id" interface="popover" label="Seleccione el Hotel de la Habitacion" label-placement="floating" fill="solid">
+                      <ion-select-option *ngFor="let hotel of datalistHotel" [value]="hotel.id">{{ hotel.name }}</ion-select-option>
+                    </ion-select>
                   </ion-col>
                   <ion-col size="12">
-                    <ion-input type="text" fill="solid" label="Numero de Habitaciones" labelPlacement="floating" helperText="Digite numero de Habitaciones" ngModel [(ngModel)]="room_number"></ion-input>
+                    <ion-input type="text" fill="solid" label="Numero de Habitación" labelPlacement="floating" helperText="Digite numero de Habitaciones" ngModel [(ngModel)]="room_number"></ion-input>
                   </ion-col>
                   <ion-col size="12">
-                    <ion-input type="text" fill="solid" label="Tipo de Habitaciones" labelPlacement="floating" helperText="Digite tipo Habitaciones" ngModel [(ngModel)]="type"></ion-input>
+                    <ion-select [(ngModel)]="type" interface="popover" label="Seleccione el tipo de Habitacion" label-placement="floating" fill="solid">
+                      <ion-select-option  value="Habitación individual">Habitación individual</ion-select-option>
+                      <ion-select-option  value="Habitación doble estándar">Habitación doble estándar</ion-select-option>
+                      <ion-select-option  value="Habitación doble deluxe">Habitación doble deluxe</ion-select-option>
+                      <ion-select-option  value="Estudio o apartamento">Estudio o apartamento</ion-select-option>
+                      <ion-select-option  value="Suite júnior">Suite júnior</ion-select-option>
+                      <ion-select-option  value="Suite ejecutiva">Suite ejecutiva</ion-select-option>
+                    </ion-select>
                   </ion-col>
                   <ion-col size="12">
                     <ion-input type="text" fill="solid" label="Precio por noche" labelPlacement="floating" helperText="Digite el precio por noche" ngModel [(ngModel)]="price_per_night"></ion-input>
                   </ion-col>
                   <ion-col size="12">
-                    <ion-input type="text" fill="solid" label="Estado" labelPlacement="floating" helperText="Digite si esta dispolible" ngModel [(ngModel)]="is_available"></ion-input>
+                    <ion-item>
+                      <ion-toggle  [(ngModel)]="is_available">Estado</ion-toggle>
+                      <ion-note slot="helper">Seleccione si está disponible</ion-note>
+                    </ion-item>
                   </ion-col>
                   <ion-item lines="none">
                     <ion-button slot="end" size="default" color="success" (click)="Modificar(this.idList);">Modificar</ion-button>

@@ -5,6 +5,7 @@ import { AlertService } from '../services/alert.service';
 import { StorageService } from '../services/storage.service';
 import { LoadingService } from '../services/loading.service';
 import { RoomModalCreateComponent } from '../room-modal-create/room-modal-create.component';
+import { ReservationService } from '../services/reservation.service';
 
 @Component({
   selector: 'app-rooms',
@@ -18,7 +19,8 @@ export class RoomsPage implements OnInit {
     public loading: LoadingService, 
     public storageService: StorageService,
     private alert: AlertService,
-    private modalController: ModalController  ) {
+    private modalController: ModalController,
+    private reservationService: ReservationService  ) {
   }
   isModalOpen = false;
   hotel_id:any;
@@ -28,11 +30,14 @@ export class RoomsPage implements OnInit {
   is_available:any;
   datalist: any[] = [];
   idList:number = 0;
+  datalistHotel: any[] = [];
+  dataListRoomshotel: any = []=[];
+  filteredRoomshotels: any[] = [];
 
   async setOpen(isOpen: boolean, id: number | null) {
     this.isModalOpen = isOpen;
     try {
-      const data = await this.listhotelsid(id);
+      const data = await this.listroomsid(id);
 
       this.idList = data.id;
       this.hotel_id = data.hotel_id;
@@ -47,9 +52,11 @@ export class RoomsPage implements OnInit {
 
 
   async ngOnInit() {
+    this.listRoomshotels(this.global.filterHotel_id);
     const currentUser = this.global.getCurrentUser();
     try {
-      const data = await this.listhotels();
+      await this.listhotels();
+      const data = await this.listRooms();
       this.datalist = data;  
     } catch (error) {
       console.error('Error al obtener la lista de Habitaciones:', error);
@@ -80,7 +87,7 @@ export class RoomsPage implements OnInit {
   }
 
 
-  async listhotels() {
+  async listRooms() {
     const accessToken = sessionStorage.getItem('AccessToken');
   
     if (!accessToken) {
@@ -109,7 +116,7 @@ export class RoomsPage implements OnInit {
     return data;
   }
 
-  async listhotelsid(id:number|null) {
+  async listroomsid(id:number|null) {
     const accessToken = sessionStorage.getItem('AccessToken');
   
     if (!accessToken) {
@@ -136,6 +143,26 @@ export class RoomsPage implements OnInit {
   
     const data = await response.json();
     return data;
+  }
+
+  async listhotels(){
+    this.datalistHotel = await this.reservationService.getlisthotels();
+  }
+  async listRoomshotels(idHotel:number){
+    try {
+      this.dataListRoomshotel = await this.reservationService.getRoomshotel(idHotel);
+    } catch (error) {
+      this.alert.AlertOneButton('Información', 'No se encontró información para este hotel, por favor crear una habitación para este Hotel.', 'Entiendo');
+      this.dataListRoomshotel = [];
+    }
+  }
+
+  mostrarNombreHotel(hotel_id: number) {
+    for (let index = 0; index < this.datalistHotel.length; index++) {
+      if (hotel_id === this.datalistHotel[index].id) {
+        return this.datalistHotel[index].name;
+      }
+    }
   }
 
   async Modificar(id:number) {
@@ -171,29 +198,6 @@ export class RoomsPage implements OnInit {
       this.loading.HideLoading();
     }
   }
-
-  async deleteHotelId(id: number) {
-    this.alert.AlertTowButtonss(
-      'Información',
-      '¿Está seguro que desea borrar esta información?',
-      'Aceptar',
-      async (res) => {
-        if (res === true) {
-          try {
-            const deleteResponse = await this.deleterooms(id);
-            this.loading.HideLoading();
-            this.alert.AlertOneButton('Información', 'Habitación eliminado exitosamente!', 'Entiendo');
-            this.ngOnInit();
-          } catch (error) {
-            console.error('Error al eliminar el hotel:', error);
-            this.loading.HideLoading();
-            this.alert.AlertOneButton('Información', 'Error al eliminar el Habitación', 'Entiendo');
-          }
-        }
-      }
-    );
-  }
-  
 
   async updaterooms(data: any, id:number) {
     const accessToken = sessionStorage.getItem('AccessToken');
@@ -232,6 +236,28 @@ export class RoomsPage implements OnInit {
     }
   
     return response.json();
+  }
+
+  async deleteRoomId(id: number) {
+    this.alert.AlertTowButtonss(
+      'Información',
+      '¿Está seguro que desea borrar esta información?',
+      'Aceptar',
+      async (res) => {
+        if (res === true) {
+          try {
+            const deleteResponse = await this.deleterooms(id);
+            this.loading.HideLoading();
+            this.alert.AlertOneButton('Información', 'Habitación eliminado exitosamente!', 'Entiendo');
+            this.ngOnInit();
+          } catch (error) {
+            console.error('Error al eliminar el hotel:', error);
+            this.loading.HideLoading();
+            this.alert.AlertOneButton('Información', 'Error al eliminar el Habitación', 'Entiendo');
+          }
+        }
+      }
+    );
   }
 
 }

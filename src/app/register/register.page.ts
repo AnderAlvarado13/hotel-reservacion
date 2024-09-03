@@ -22,6 +22,9 @@ export class RegisterPage implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.global.appPages = [
+      { title: 'Login', url: '/login', icon: 'person-circle' }
+    ];
   }
   Registrar(){
     this.loading.LoadingNormal('Creando Usuario...',2);

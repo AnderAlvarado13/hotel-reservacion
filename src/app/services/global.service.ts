@@ -9,6 +9,7 @@ export class GlobalService {
   isLoggedIn: boolean = false; // Asegúrate de usar esta propiedad
   public apiUrl = 'http://localhost:3000/api';
   private storageKey = 'UserData';
+  filterHotel_id: number = 1;
   currentUser: any = null;
   public appPages = [
     { title: 'Login', url: '/login', icon: 'person-circle' }

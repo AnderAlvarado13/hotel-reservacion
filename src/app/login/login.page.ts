@@ -25,7 +25,9 @@ export class LoginPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    
+    this.global.appPages = [
+      { title: 'Login', url: '/login', icon: 'person-circle' }
+    ];
   }
   Login() {
     this.loading.LoadingNormal('Iniciando Sesión...',2);
