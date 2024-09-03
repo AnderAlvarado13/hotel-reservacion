@@ -1,6 +1,6 @@
 # Hotel Reservacion
 
-Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) version 14.2.9.
+Este proyecto fue generado con [Angular CLI](https://github.com/angular/angular-cli) version 18.2.2.
 
 <h3> 🛠️ Indicaciones de la Api 🛠️ </h3>
 
@@ -17,4 +17,4 @@ Ejecute `npm i --force` permite crear los archivos necesarios para gestionar el 
 Ejecute `ngserve` para un servidor de desarrollo. Navegue hasta `http://localhost:4200/`. La aplicación se recargará automáticamente si cambia alguno de los archivos fuente.
 
 > [!NOTE]
-> Para que la peticion funcione de forma correcta es necesario que el servicio ´Hotel-api´ este corriendo para que se pueda realizar la peticion al puerto indicado.
+> Para que la peticion funcione de forma correcta es necesario que el servicio [Hotel-api](https://github.com/AnderAlvarado13/hotel-api) este corriendo para que se pueda realizar la peticion al puerto indicado.
