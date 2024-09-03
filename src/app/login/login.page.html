@@ -9,11 +9,11 @@
       <ion-list>
         <ion-item>
           <ion-label>Usuario: </ion-label>
-          <ion-input [(ngModel)]="User" [ngModelOptions]="{standalone: true}"></ion-input>
+          <ion-input [(ngModel)]="username" [ngModelOptions]="{standalone: true}" required></ion-input>
         </ion-item>
         <ion-item>
           <ion-label>Contraseña: </ion-label>
-          <ion-input [(ngModel)]="Pass" [ngModelOptions]="{standalone: true}" type="password"  (keyup.enter)="Login()"></ion-input>
+          <ion-input [(ngModel)]="password" [ngModelOptions]="{standalone: true}" type="password"  (keyup.enter)="Login()" required></ion-input>
         </ion-item>
         <ion-item lines="none">
           <a slot="end" href="/register" style="text-decoration: none;">Registrar Usuario</a>

@@ -1,0 +1,41 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Crear</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss('close')"><ion-icon name="close-outline"></ion-icon></ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  <ion-row class="ion-align-items-center">
+    <ion-col size="12">
+      <ion-card style="height: auto" class="card-border">
+        <ion-card-header>
+          <ion-title style="text-align: center;align-items: center;" size="large">Crear Hotel</ion-title>
+        </ion-card-header>
+        <ion-card-content style="width: 100%;">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="12">
+              <ion-input type="text" fill="solid" label="Nombre" labelPlacement="floating" helperText="Digite el nombre del hotel" ngModel [(ngModel)]="name"></ion-input>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input type="text" fill="solid" label="Dirección" labelPlacement="floating" helperText="Digite la dirección del hotel" ngModel [(ngModel)]="address"></ion-input>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input type="text" fill="solid" label="Ciudad" labelPlacement="floating" helperText="Digite la Ciudad del hotel" ngModel [(ngModel)]="city"></ion-input>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input type="text" fill="solid" label="País" labelPlacement="floating" helperText="Digite el País del hotel" ngModel [(ngModel)]="country"></ion-input>
+            </ion-col>
+            <ion-col size="12">
+              <ion-input type="text" fill="solid" label="Teléfono" labelPlacement="floating" helperText="Digite el Teléfono del hotel" ngModel [(ngModel)]="phone_number"></ion-input>
+            </ion-col>
+            <ion-item lines="none">
+              <ion-button slot="end" size="default" color="success" (click)="crear()">Crear</ion-button>
+            </ion-item>
+          </ion-row>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>

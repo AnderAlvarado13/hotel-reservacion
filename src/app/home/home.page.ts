@@ -1,4 +1,7 @@
+/* eslint-disable @angular-eslint/use-lifecycle-interface */
 import { Component } from '@angular/core';
+import { GlobalService } from '../services/global.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -7,6 +10,21 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
-  constructor() {}
+  constructor(
+    public global: GlobalService,
+    public nav: NavController
+  ) {}
+
+  ngOnInit(): void {
+    const currentUser = this.global.getCurrentUser();
+    if (currentUser){
+      this.global.appPages = JSON.parse(currentUser)
+    }
+  }
+
+  logout() {
+    this.global.logout();
+    this.nav.navigateRoot(['/login']);
+  }
 
 }
